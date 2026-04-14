@@ -48,7 +48,7 @@ jobs:
         run: | 
             aws ssm send-command \
             --document-name "AWS-RunShellScript" \
-            --targets "Key=instanceids,Values=i-0245bbf22da24e50f" \                                                                                                                        
+            --targets "Key=instanceIds,Values=i-0245bbf22da24e50f" \
             --comment "Deploy container" \
             --parameters 'commands=[
               "set -e",
@@ -58,4 +58,4 @@ jobs:
               "docker rm my-app || true",
               "docker run -d --name my-app -p 80:8080 158565517012.dkr.ecr.eu-central-1.amazonaws.com/my-frontend:latest"
               ]' \
-            --region eu-central-1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+            --region eu-central-1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
