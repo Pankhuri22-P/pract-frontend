@@ -56,6 +56,6 @@ jobs:
               "docker pull 158565517012.dkr.ecr.eu-central-1.amazonaws.com/my-frontend:latest",
               "docker stop my-app || true",
               "docker rm my-app || true",
-              "docker run -d --name my-app -p 80:8080 158565517012.dkr.ecr.eu-central-1.amazonaws.com/my-frontend:latest"
+              "docker run -d --name my-app -p 80:80 158565517012.dkr.ecr.eu-central-1.amazonaws.com/my-frontend:latest"
               ]' \
             --region eu-central-1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
