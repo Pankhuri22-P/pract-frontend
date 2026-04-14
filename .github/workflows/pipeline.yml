@@ -37,7 +37,7 @@ jobs:
         run: docker push 158565517012.dkr.ecr.eu-central-1.amazonaws.com/technative-playground/my-frontend:latest
       
       - name: create a task definition
-        uses: aws-actions/amazon-ecs-render-task-definition
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: frontend-task-def
           container-name: my-frontend
