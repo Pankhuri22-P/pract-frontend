@@ -15,9 +15,11 @@ jobs:
       - name: checkout
         uses: actions/checkout@v5
 
-      - name: build image
-        run: docker build -t  my-frontend .
-
+      - name: build-image
+        run: |
+        docker build -t my-frontend . 
+        echo "image=158565517012.dkr.ecr.eu-central-1.amazonaws.com/technative-playground/my-frontend:latest" >> $GITHUB_OUTPUT
+      
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v6.1.0
         with:
@@ -33,4 +35,10 @@ jobs:
 
       - name: push to ecr
         run: docker push 158565517012.dkr.ecr.eu-central-1.amazonaws.com/technative-playground/my-frontend:latest
-     
+      
+      - name: create a task definition
+        uses: aws-actions/amazon-ecs-render-task-definition
+        with:
+          task-definition: frontend-task-def
+          container-name: my-frontend
+          image: ${{ steps.build-image.outputs.image }}
