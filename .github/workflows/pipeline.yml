@@ -45,7 +45,8 @@ jobs:
       #     image: ${{ steps.build-image.outputs.image }}
 
       - name: run container on ec2
-        run: aws ssm send-command \
+        run: | 
+            aws ssm send-command \
             --document-name "AWS-RunShellScript" \
             --targets "Key=instanceids, Values=i-0245bbf22da24e50f" \                                                                                                                        
             --comment "Deploy container" \
