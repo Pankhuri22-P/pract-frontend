@@ -48,7 +48,7 @@ jobs:
         run: | 
             aws ssm send-command \
             --document-name "AWS-RunShellScript" \
-            --targets "Key=instanceids, Values=i-0245bbf22da24e50f" \                                                                                                                        
+            --targets "Key=instanceids,Values=i-0245bbf22da24e50f" \                                                                                                                        
             --comment "Deploy container" \
             --parameters 'commands=[
               "set -e",
