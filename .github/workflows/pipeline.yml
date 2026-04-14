@@ -37,9 +37,24 @@ jobs:
       - name: push to ecr
         run: docker push 158565517012.dkr.ecr.eu-central-1.amazonaws.com/technative-playground/my-frontend:latest
       
-      - name: create a task definition
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: frontend-task-def
-          container-name: my-frontend
-          image: ${{ steps.build-image.outputs.image }}
+      # - name: create a task definition
+      #   uses: aws-actions/amazon-ecs-render-task-definition@v1
+      #   with:
+      #     task-definition: frontend-task-def
+      #     container-name: my-frontend
+      #     image: ${{ steps.build-image.outputs.image }}
+
+      - name: run container on ec2
+        run: aws ssm send-command \
+            --document-name "AWS-RunShellScript" \
+            --targets "Key=instanceids, Values=i-0245bbf22da24e50f" \                                                                                                                        
+            --comment "Deploy container" \
+            --parameters 'commands=[
+              "set -e",
+              "aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin 158565517012.dkr.ecr.eu-central-1.amazonaws.com",
+              "docker pull 158565517012.dkr.ecr.eu-central-1.amazonaws.com/my-frontend:latest",
+              "docker stop my-app || true",
+              "docker rm my-app || true",
+              "docker run -d --name my-app -p 80:8080 158565517012.dkr.ecr.eu-central-1.amazonaws.com/my-frontend:latest"
+              ]' \
+            --region eu-central-1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
